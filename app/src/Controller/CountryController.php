@@ -202,11 +202,11 @@ class CountryController extends AppController
     
     public function printCountry(){
         
-        $response = '<div class="form-group"><img width="50px" heigth="50px" src="'.$this->getFlag().'" /> <label>Name</label>'.$this->getName().'<label>Capital</label>'.$this->getCapital().'</div>';
-        $response .= '<div class="form-group"><label>Language</label>'.$this->getLanguages().'<label>Currency</label>'.$this->getCurrency().'<label>TimeZone</label>'.$this->getTimezone().'</div>';
-        $response .= '<div class="form-group"><label>Area</label>'.$this->getArea().'<label>Lat</label>'.$this->getLatitud().'<label>Long</label>'.$this->getLongitud().'</div>';
-        $response .= '<div class="form-group"><label>Population</label>'.$this->getPopulation().'<label>Region</label>'.$this->getRegion().'<label>SubRegion</label>'.$this->getSubRegion().'</div>';
-        $response .= '<div class="form-group"><label>Alt Spelling</label>'.$this->getAltSpelling().'<label>Calling Code</label>'.$this->getCallingCode().'<label>Top Level Domain</label>Top Level Domain: '.$this->getTopLevelDomain().'</div>';
+        $response = '<div class="row"><div class="col-sm"><img width="50px" heigth="50px" src="'.$this->getFlag().'" /></div><div class="col-sm"><label>Name: </label>'.$this->getName().'</div><div class="col-sm"><label>Capital: </label>'.$this->getCapital().'</div></div>';
+        $response .= '<div class="row"><div class="col-sm"><label>Language: </label>'.$this->getLanguages().'</div><div class="col-sm"><label>Currency: </label>'.$this->getCurrency().'</div><div class="col-sm"><label>TimeZone: </label>'.$this->getTimezone().'</div></div>';
+        $response .= '<div class="row"><div class="col-sm"><label>Area: </label>'.$this->getArea().'</div><div class="col-sm"><label>Lat: </label>'.$this->getLatitud().'</div><div class="col-sm"><label>Long: </label>'.$this->getLongitud().'</div></div>';
+        $response .= '<div class="row"><div class="col-sm"><label>Population: </label>'.$this->getPopulation().'</div><div class="col-sm"><label>Region: </label>'.$this->getRegion().'</div><div class="col-sm"><label>SubRegion: </label>'.$this->getSubRegion().'</div></div>';
+        $response .= '<div class="row"><div class="col-sm"><label>Alt Spelling: </label>'.$this->getAltSpelling().'</div><div class="col-sm"><label>Calling Code: </label>'.$this->getCallingCode().'</div><div class="col-sm"><label>Top Level Domain: </label>Top Level Domain: '.$this->getTopLevelDomain().'</div></div>';
 	
         return $response;
         

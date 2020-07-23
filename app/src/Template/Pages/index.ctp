@@ -52,7 +52,7 @@
 
 <div id="viewCountryModal" class="modal fade">
 	<div class="modal-dialog">
-		<div class="modal-content" style="width:159%">
+		<div class="modal-content" style="width:190%">
 			<form method="post" id="view_form" action="add">
 				<div class="modal-header">						
 					<h4 class="modal-title">Country</h4>
