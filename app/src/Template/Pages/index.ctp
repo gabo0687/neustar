@@ -28,7 +28,7 @@
                                                 <td><?php echo $country["CountryName"];?></td>
 						<td>    
 							<a onclick="openView('viewCountryModal', <?php echo "'".trim($country["TwoCharCountryCode"])."'"?>);" class="delete" data-toggle="modal"><i class="material-icons zoom_in">&#xe8ff;</i></a>
-							<a href="#editCountryModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+							<a href="#editCountryModal" class="edit code-edit" data-toggle="modal" data-id="<?php echo $country["id"];?>"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 							<a href="#deleteCountryModal" class="delete code-delete" data-toggle="modal" data-id="<?php echo $country["id"];?>"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 						</td>
 					</tr>
@@ -97,12 +97,12 @@
 <div id="editCountryModal" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form>
+			<form method="post" id="edit_form" action="edit">
 				<div class="modal-header">						
 					<h4 class="modal-title">Edit Country</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<button type="button" class="close close_edit" data-dismiss="modal" aria-hidden="true">&times;</button>
 				</div>
-				<div class="modal-body">					
+				<div class="modal-body" id="view_response">					
 					<div class="form-group">
 						<label>Name</label>
 						<input type="text" class="form-control" required>

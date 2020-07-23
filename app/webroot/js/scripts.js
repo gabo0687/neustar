@@ -38,8 +38,42 @@ $(document).ready(function(){
 
     });
     
+    
+    //Function deleting a country
+    var frm_edit = $('#edit_form');
+    frm_edit.submit(function (e) {
+
+        e.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: frm_edit.attr('action'),
+            data: frm_edit.serialize(), // serializes the form's elements.
+            success: function (data_edit)
+            {   
+               $('.close_edit').click();
+               location.reload(); 
+            }
+        });
+
+    });
+    
     $( ".code-delete" ).click(function(){
      $("#countryId").val($(this).data('id'));
+    });
+    
+    
+    $( ".code-edit" ).click(function(){
+     var countryId = $(this).data('id');
+     $.ajax({
+            type: "POST",
+            url: 'Pages/countryeditview',
+            data: 'countryId='+countryId,// serializes the form's elements.
+            success: function (data)
+            {   
+              $('#view_response').html(data);  
+              $('#editCountryModal').modal('show');
+            }
+        });
     });
         
 });

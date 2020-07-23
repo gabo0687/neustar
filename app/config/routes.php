@@ -67,6 +67,8 @@ Router::scope('/', function (RouteBuilder $routes) {
     $routes->connect('/add', ['controller' => 'Pages', 'action' => 'addcountry']);
     
     $routes->connect('/deleteform', ['controller' => 'Pages', 'action' => 'deletecountry']);
+    
+    $routes->connect('/edit', ['controller' => 'Pages', 'action' => 'editcountry']);
   
     /**
      * ...and connect the rest of 'Pages' controller's URLs.

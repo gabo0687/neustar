@@ -89,6 +89,22 @@ class PagesController extends AppController
 
       
     }
+    
+    function editcountry(){
+      $this->layout = 'ajax';
+      $this->autoRender = false;  
+      $id = $_POST['country_id'];
+      $country_name = $_POST['country_name'];
+      $country_code = $_POST['country_code'];
+      $this->AppsCountries = TableRegistry::get('AppsCountries');
+      $query = $this->AppsCountries->query();
+      $result = $query->update()
+                ->set(['CountryName' => $country_name,'TwoCharCountryCode' => $country_code])
+                ->where(['id' => $id])
+                ->execute();
+      
+    }
+    
     function countrydetail(){
         $this->layout = 'ajax';
         $nombre = $_POST['CountryCode'];
@@ -127,6 +143,15 @@ class PagesController extends AppController
         $country->setFlag($output->flag);
         $response = $country->printCountry();
         $this->set('response',$response);
+    }
+    
+    public function countryeditview(){
+        $this->layout = 'ajax';
+        $countryId = $_POST['countryId'];
+        $this->AppsCountries = TableRegistry::get('AppsCountries');
+        $country = $this->AppsCountries->find()->where(['id' => $countryId])->hydrate(false)->first();
+        
+        $this->set('country',$country);
     }
 }
 
