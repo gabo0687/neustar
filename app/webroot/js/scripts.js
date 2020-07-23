@@ -39,7 +39,7 @@ $(document).ready(function(){
     });
     
     
-    //Function deleting a country
+    //Function editing a country
     var frm_edit = $('#edit_form');
     frm_edit.submit(function (e) {
 
@@ -57,11 +57,13 @@ $(document).ready(function(){
 
     });
     
+    
+    //Add value to input hidden countryId in modal
     $( ".code-delete" ).click(function(){
      $("#countryId").val($(this).data('id'));
     });
     
-    
+    //Load edit info in modal
     $( ".code-edit" ).click(function(){
      var countryId = $(this).data('id');
      $.ajax({
@@ -78,6 +80,7 @@ $(document).ready(function(){
         
 });
 
+//Open Country info from https://restcountries.eu
 function openView(modal,CountryCode){
      $.ajax({
             type: "POST",

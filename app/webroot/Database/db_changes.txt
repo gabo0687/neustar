@@ -1,6 +1,7 @@
 
-CREATE DATABASE neustar;
+CREATE DATABASE test_neustar;
 
+CREATE DATABASE neustar;
 CREATE TABLE apps_countries( id INT AUTO_INCREMENT,TwoCharCountryCode CHAR(2),CountryName VARCHAR(50),PRIMARY KEY(id));
 
 INSERT INTO `apps_countries` (TwoCharCountryCode,CountryName) VALUES ( 'AL', 'Albania');

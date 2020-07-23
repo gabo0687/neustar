@@ -17,10 +17,8 @@ namespace App\Test\TestCase\Controller;
 use App\Controller\PagesController;
 use Cake\Core\App;
 use Cake\Core\Configure;
-use Cake\Http\Response;
-use Cake\Http\ServerRequest;
 use Cake\TestSuite\IntegrationTestCase;
-use Cake\View\Exception\MissingTemplateException;
+use Cake\ORM\TableRegistry;
 
 /**
  * PagesControllerTest class
@@ -32,6 +30,9 @@ class PagesControllerTest extends IntegrationTestCase
      *
      * @return void
      */
+    
+    public $fixtures = ['app.AppsCountries'];
+    
     public function testMultipleGet()
     {
         $this->get('/');
@@ -47,9 +48,9 @@ class PagesControllerTest extends IntegrationTestCase
      */
     public function testDisplay()
     {
-        $this->get('/pages/home');
+        $this->get('/pages/index');
         $this->assertResponseOk();
-        $this->assertResponseContains('CakePHP');
+        //$this->assertResponseContains('CakePHP');
         $this->assertResponseContains('<html>');
     }
 
@@ -61,37 +62,62 @@ class PagesControllerTest extends IntegrationTestCase
     public function testMissingTemplate()
     {
         Configure::write('debug', false);
-        $this->get('/pages/not_existing');
+        $this->get('/pages/default');
 
         $this->assertResponseError();
         $this->assertResponseContains('Error');
     }
-
+    
     /**
-     * Test that missing template in debug mode renders missing_template error page
-     *
-     * @return void
+     * Test Country insert in DB
      */
-    public function testMissingTemplateInDebug()
-    {
-        Configure::write('debug', true);
-        $this->get('/pages/not_existing');
+    public function testAddCountry() {
 
-        $this->assertResponseFailure();
-        $this->assertResponseContains('Missing Template');
-        $this->assertResponseContains('Stacktrace');
-        $this->assertResponseContains('not_existing.ctp');
+        $this->AppsCountries = TableRegistry::get('AppsCountries');
+        $country = $this->AppsCountries->find()->first();
+        
+        $country_code = $country->TwoCharCountryCode;
+        $country_name = $country->CountryName;
+        
+        $test = new PagesController();
+        $response = $test->addcountries($country_code, $country_name);
+         //fwrite(STDERR, var_dump($response, TRUE)); 
+        $this->assertTrue($response);
     }
-
+    
     /**
-     * Test directory traversal protection
-     *
-     * @return void
+     * Test Country insert in DB
      */
-    public function testDirectoryTraversalProtection()
-    {
-        $this->get('/pages/../Layout/ajax');
-        $this->assertResponseCode(403);
-        $this->assertResponseContains('Forbidden');
+    public function testEditCountry() {
+
+        $this->AppsCountries = TableRegistry::get('AppsCountries');
+        $country = $this->AppsCountries->find()->first();
+        
+        $country_id = $country->id;
+        $country_code = $country->TwoCharCountryCode;
+        $country_name = $country->CountryName;
+        
+        $test = new PagesController();
+        $response = $test->editcountries($country_id,$country_code, $country_name);
+         //fwrite(STDERR, var_dump($response, TRUE)); 
+        $this->assertTrue($response);
     }
+    
+    /**
+     * Test Country Delete in DB
+     */
+    public function testDeleteCountry() {
+
+        $this->AppsCountries = TableRegistry::get('AppsCountries');
+        $country = $this->AppsCountries->find()->first();
+        
+        $country_id = $country->id;
+        
+        $test = new PagesController();
+        $response = $test->deletecountries($country_id);
+         //fwrite(STDERR, var_dump($response, TRUE)); 
+        $this->assertTrue($response);
+    }
+    
+    
 }

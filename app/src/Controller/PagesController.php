@@ -57,16 +57,21 @@ class PagesController extends AppController
      *   be found or \Cake\View\Exception\MissingTemplateException in debug mode.
      */
   
-    
+    /**
+     * Function index Show Countries
+     */
     function index(){
       $this->AppsCountries = TableRegistry::get('AppsCountries');
       $details=$this->AppsCountries->find('all')->hydrate(false);    
       $this->set('countries', $this->paginate($details));
-   
+      
       
      
     }
     
+    /**
+     * Function add Country
+     */
     function addcountry(){
       $this->layout = 'ajax';
       $this->autoRender = false;
@@ -78,6 +83,9 @@ class PagesController extends AppController
       
     }
     
+    /**
+     * Function delete Country  by id
+     */
     function deletecountry(){
       $this->layout = 'ajax';
       $this->autoRender = false;
@@ -90,6 +98,9 @@ class PagesController extends AppController
       
     }
     
+    /**
+     * Function edit country by id
+     */
     function editcountry(){
       $this->layout = 'ajax';
       $this->autoRender = false;  
@@ -104,6 +115,10 @@ class PagesController extends AppController
                 ->execute();
       
     }
+    
+    /**
+     * Function For modal popup get country info from https://restcountries.eu
+     */
     
     function countrydetail(){
         $this->layout = 'ajax';
@@ -145,6 +160,8 @@ class PagesController extends AppController
         $this->set('response',$response);
     }
     
+    
+    
     public function countryeditview(){
         $this->layout = 'ajax';
         $countryId = $_POST['countryId'];
@@ -153,5 +170,55 @@ class PagesController extends AppController
         
         $this->set('country',$country);
     }
+    
+    
+     function addcountries($country_code = null,$country_name=null){
+      $this->layout = 'ajax';
+      $this->autoRender = false;
+      $this->AppsCountries = TableRegistry::get('AppsCountries');
+      $newAppsCountries = $this->AppsCountries->newEntity();
+      $newAppsCountries->TwoCharCountryCode = $country_code;
+      $newAppsCountries->CountryName = $country_name;
+      if($this->AppsCountries->save($newAppsCountries)){
+          return true;
+      }else{
+          return false;
+      }
+      
+    }
+    
+    function editcountries($country_id,$country_code, $country_name){
+         $this->layout = 'ajax';
+      $this->autoRender = false;  
+      $id = $_POST['country_id'];
+      $country_name = $_POST['country_name'];
+      $country_code = $_POST['country_code'];
+      $this->AppsCountries = TableRegistry::get('AppsCountries');
+      $query = $this->AppsCountries->query();
+      $result = $query->update()
+                ->set(['CountryName' => $country_name,'TwoCharCountryCode' => $country_code])
+                ->where(['id' => $id])
+                ->execute();
+      if($result){
+        return true;
+      }else{
+          return false;
+      }
+    }
+    
+    function deletecountries($country_id){
+      $this->layout = 'ajax';
+      $this->autoRender = false;
+      
+      $this->AppsCountries = TableRegistry::get('AppsCountries');
+      $country = $this->AppsCountries->get($country_id);
+      $result = $this->AppsCountries->delete($country);
+      if($result){
+        return true;
+      }else{
+          return false;
+      }
+    }
+    
 }
 
